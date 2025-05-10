@@ -114,7 +114,7 @@ const MovieDetails = () => {
 
                 {/* Back button */}
                 <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-start", mb: -4 }}>
-                    <Button onClick={() => navigate(-1)} sx={{ color: "text.primary", '&:hover': { color: orange[700] }, textTransform: "none", fontWeight: "bold", fontSize: { xs: "0.6rem", sm: "1rem" }, px: { xs: 0.5, sm: 2 }, py: { xs: 0.5, sm: 1 } }} startIcon={<ArrowBackIcon sx={{ color: orange[600] }} />}>BACK TO HOME</Button>
+                    <Button onClick={() => navigate(-1)} sx={{ color: "text.primary", '&:hover': { color: orange[700] }, textTransform: "none", fontWeight: "bold", fontSize: { xs: "0.6rem", sm: "1rem" }, px: { xs: 0.5, sm: 2 }, py: { xs: 0.5, sm: 1 } }} startIcon={<ArrowBackIcon sx={{ color: orange[600] }} />}>MOVE BACK</Button>
                 </Box>
 
                 {/* Movie Poster */}
