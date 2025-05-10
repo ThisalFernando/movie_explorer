@@ -33,6 +33,7 @@ const TrendingMovies = ({ timeWindow = "week" }) => {
     const [selectedYear, setSelectedYear] = useState("");
     const [selectedRating, setSelectedRating] = useState("");
     const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(false);
 
     const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
@@ -83,6 +84,8 @@ const TrendingMovies = ({ timeWindow = "week" }) => {
             setPage(currentPage);
         } catch (err) {
             console.error("Error fetching trending movies: ", err);
+        }finally{
+            setLoading(false);
         }
     }, [API_KEY, query, selectedGenre, selectedYear, selectedRating, timeWindow]);
 
@@ -236,44 +239,51 @@ const TrendingMovies = ({ timeWindow = "week" }) => {
                 </FormControl>
             </Box>
 
-            {/* Movie Grid */}
-            <Grid container spacing={5} sx={{ ml: { sm: 6 } }}>
-                {movies.map((movie) => (
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Link to={`/movie/${movie.id}`} style={{ textDecoration: "none" }}>
-                            <Card sx={{ bgcolor: "background.paper" }} >
-                                {/* Movie Poster */}
-                                <CardMedia
-                                    component="img"
-                                    image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                    alt={TrendingMovies.title}
-                                />
+            {/* Set the loading of the trending movies */}
+            {loading ? (
+                <Typography sx={{fontSize: {xs: '12px', sm: '14px', md: '16px' }, mb: { xs: 7, sm: 7, md: 12 }, color: grey[500]}}>Loading trending movies...</Typography>
+            ) : movies.length === 0 ? (
+                <Typography sx={{fontSize: {xs: '12px', sm: '14px', md: '16px' }, mb: { xs: 7, sm: 7, md: 12 }, color: grey[500]}}>No trending movies found!</Typography>
+            ) : (
+                <>
+                    {/* Movie Grid */}
+                    <Grid container spacing={5} sx={{ ml: { sm: 6 } }}>
+                        {movies.map((movie) => (
+                            <Grid item xs={12} sm={6} md={3}>
+                                <Link to={`/movie/${movie.id}`} style={{ textDecoration: "none" }}>
+                                    <Card sx={{ bgcolor: "background.paper" }} >
+                                        {/* Movie Poster */}
+                                        <CardMedia
+                                            component="img"
+                                            image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                            alt={TrendingMovies.title}
+                                        />
 
-                                {/* Movie Title */}
-                                <CardContent>
-                                    <Typography varient="h6" sx={{ color: orange[600], fontWeight: "bold" }}>
-                                        {movie.title}
-                                    </Typography>
+                                        {/* Movie Title */}
+                                        <CardContent>
+                                            <Typography varient="h6" sx={{ color: orange[600], fontWeight: "bold" }}>
+                                                {movie.title}
+                                            </Typography>
 
-                                    {/* Movie release date */}
-                                    <Typography varient="body2" color="text-primary">
-                                        {new Date(movie.release_date).getFullYear()}
-                                    </Typography>
+                                            {/* Movie release date */}
+                                            <Typography varient="body2" color="text-primary">
+                                                {new Date(movie.release_date).getFullYear()}
+                                            </Typography>
 
-                                    {/* Movie Rating */}
-                                    <Rating
-                                        value={movie.vote_average / 2}
-                                        precision={0.5}
-                                        readOnly
-                                        size="small"
-                                    />
-                                </CardContent>
-                            </Card>
-                        </Link>
+                                            {/* Movie Rating */}
+                                            <Rating
+                                                value={movie.vote_average / 2}
+                                                precision={0.5}
+                                                readOnly
+                                                size="small"
+                                            />
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
-            </Grid>
-
+                </>)}
             {/* Load more button */}
             {hasMore && (
                 <Box sx={{ mt: 4, mb: 6, display: "flex", justifyContent: "center", boxShadow: 5 }}>
