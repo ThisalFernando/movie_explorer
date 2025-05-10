@@ -165,7 +165,7 @@ const TrendingMovies = ({ timeWindow = "week" }) => {
                 }, {
                     headers: {Authorization: `Bearer ${token}`}
                 });
-                setFavorites([...favorites.movie.id]);
+                setFavorites([...favorites, movie.id]);
             }
         }catch(err){
             console.error("Favorite toggle failed: ", err);
