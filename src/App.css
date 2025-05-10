@@ -36,3 +36,54 @@
     transform: rotate(360deg);
   }
 }
+
+.mui-swal-popup {
+  border-radius: 12px;
+  font-family: "Roboto", sans-serif;
+  padding: 1rem;
+}
+
+.mui-swal-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: orange; /* MUI primary */
+}
+
+.mui-swal-errortitle {
+  font-size: 2rem;
+  font-weight: 600;
+  color: red; /* MUI primary */
+}
+
+.mui-swal-confirm-button {
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  transition: background 0.3s;
+  width: 200px;
+  max-width: 1000px;
+}
+
+.mui-swal-confirm-button:hover {
+  background-color: #000;
+}
+
+.mui-swal-cancel-button {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  transition: background 0.3s;
+  width: 200px;
+  max-width: 1000px;
+}
+
+.mui-swal-cancel-button:hover {
+  background-color: #000;
+}
+
