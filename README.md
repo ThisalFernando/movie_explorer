@@ -6,14 +6,14 @@ MOVIE EXPLORER is a modern movie based website to explore and filter popular and
 ## Features of our system
 
 - 🧑‍💻 User authentication (Register/Login).
-- 🗣️ Display popular movies with the youtube trailer and further details.  
+- 🎬 Display popular movies with the youtube trailer and further details.  
 - 🔍 Search by movie name with storing last searched movie.
 - 🌐 Filter by genre of the movie.
-- 🗣️ Filter by released year of the movie.
-- ⭐ Filter by rating of the movie.
-- 🗣️ Display trending movies with the youtube trailer and further details.
+- 📅 Filter by released year of the movie.
+- 📊 Filter by rating of the movie.
+- 🎬 Display trending movies with the youtube trailer and further details.
 - ⭐ Add/remove favorite movies and display to the user.
-- ⭐ Light/dark mode.
+- 🔆 Light/dark mode.
 - 🎨 Responsive and modern UI.
 
 ## Tech Stack we have used
@@ -130,7 +130,7 @@ This will generate optimized static files in the dist/ directory.
 
 ## Connect With MOVIE EXPLORER
 
-🧑‍🎓[MOVIE EXPLORER - Discover your favorite films](https://movie-explorer-omega-green.vercel.app/)
+🌐[MOVIE EXPLORER - Discover your favorite films](https://movie-explorer-omega-green.vercel.app/)
 
 
 
