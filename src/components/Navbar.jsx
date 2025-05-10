@@ -94,7 +94,7 @@ const Navbar = () => {
     const menuItems = isLoggedIn
         // After log in to the system
         ? [
-            { label: "HOME", path: "/movies" },
+            { label: "POPULAR", path: "/movies" },
             { label: "TRENDING", path: "/trending" },
             { label: "FAVORITES", path: "/favorites" },
             { label: "LOGOUT", action: handleLogout },
