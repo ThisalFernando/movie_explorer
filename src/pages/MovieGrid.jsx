@@ -209,7 +209,6 @@ const MovieGrid = () => {
                             variant="subtitle2"
                             sx={{
                                 fontWeight: "bold",
-                                fontFamily: "Roboto",
                                 color: "text.primary",
                                 letterSpacing: { xs: "0.4em", sm: "0.6em", md: "0.72em" },
                                 ml: 0.5,
