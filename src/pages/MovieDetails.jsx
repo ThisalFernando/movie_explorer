@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import {
     Typography,
     Container,
@@ -22,6 +21,7 @@ const MovieDetails = () => {
     const [movie, setMovie] = useState(null);
     const [cast, setCast] = useState([]);
     const [trailer, setTrailer] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -114,7 +114,7 @@ const MovieDetails = () => {
 
                 {/* Back button */}
                 <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-start", mb: -4 }}>
-                    <Link to="/movies" style={{ textDecoration: "none" }} ><Button sx={{ color: "text.primary", '&:hover': { color: orange[700] }, textTransform: "none", fontWeight: "bold", fontSize: { xs: "0.6rem", sm: "1rem" }, px: { xs: 0.5, sm: 2 }, py: { xs: 0.5, sm: 1 } }} startIcon={<ArrowBackIcon sx={{ color: orange[600] }} />}>BACK TO HOME</Button></Link>
+                    <Button onClick={() => navigate(-1)} sx={{ color: "text.primary", '&:hover': { color: orange[700] }, textTransform: "none", fontWeight: "bold", fontSize: { xs: "0.6rem", sm: "1rem" }, px: { xs: 0.5, sm: 2 }, py: { xs: 0.5, sm: 1 } }} startIcon={<ArrowBackIcon sx={{ color: orange[600] }} />}>BACK TO HOME</Button>
                 </Box>
 
                 {/* Movie Poster */}
