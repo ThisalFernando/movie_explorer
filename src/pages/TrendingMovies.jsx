@@ -38,6 +38,7 @@ const TrendingMovies = ({ timeWindow = "week" }) => {
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(false);
     const [favorites, setFavorites] = useState([]);
+    const token = localStorage.getItem("token");
 
     const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
