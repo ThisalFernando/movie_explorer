@@ -102,7 +102,7 @@ const FavoriteMovies = () => {
                     <Grid container spacing={5} sx={{ ml: { sm: 6 } }}>
                         {favorites.map((movie) => (
                             <Grid item key={movie.movieId} xs={12} sm={6} md={4} lg={3} position="relative">
-                                <Link to={`/movie/${movie.id}`} style={{ textDecoration: "none" }}>
+                                <Link to={`/movie/${movie.movieId}`} style={{ textDecoration: "none" }}>
                                     <Card sx={{ bgcolor: "background.paper", height: "100%" }}>
                                         {/* Movie Poster */}
                                         <CardMedia
