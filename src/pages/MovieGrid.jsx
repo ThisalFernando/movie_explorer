@@ -8,20 +8,14 @@ import {
     Container,
     Rating,
     CardContent,
-    TextField,
-    InputAdornment,
     IconButton,
     Box,
-    Avatar,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
     Button,
 } from "@mui/material";
+import MovieHeader from "../components/MovieHeader";
+import MovieSearchBar from "../components/MovieSearchBar";
+import MovieFilterBars from "../components/MovieFilterBars";
 import { orange, grey } from "@mui/material/colors";
-import SearchIcon from "@mui/icons-material/Search";
-import MELogo from "../asserts/MELogo.png"
 import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -180,117 +174,29 @@ const MovieGrid = () => {
         <Container sx={{ mt: 10, px: { xs: 2, sm: 3, md: 4 }, display: "flex", flexDirection: "column", alignItems: "center" }}>
             <>
                 {/* Site Logo and Name */}
-                <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    mt={3}
-                    flexWrap="wrap"
-                >
-                    <Avatar
-                        src={MELogo}
-                        alt="Logo"
-                        sx={{ width: { xs: 40, sm: 60, md: 80 }, height: { xs: 40, sm: 60, md: 80 }, mr: 1, borderRadius: 2, mb: { md: 0 } }}
-                    />
-                    <Box textAlign="center">
-                        <Typography
-                            variant="h3"
-                            sx={{
-                                fontWeight: "bold",
-                                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem", lg: "3rem" },
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            MOVIE&nbsp;
-                            <Box component="span" sx={{ color: orange[600] }}>
-                                EXPLORER
-                            </Box>
-                        </Typography>
-                        <Typography
-                            variant="subtitle2"
-                            sx={{
-                                fontWeight: "bold",
-                                color: "text.primary",
-                                letterSpacing: { xs: "0.4em", sm: "0.6em", md: "0.72em" },
-                                ml: 0.5,
-                                fontSize: { xs: "0.47rem", sm: "0.52rem", md: "0.58rem", lg: "0.7rem" },
-                            }}
-                        >
-                            DISCOVER YOUR FAVORITE FILMS
-                        </Typography>
-                    </Box>
-                </Box>
+                <MovieHeader />
                 <br />
             </>
 
             {/* Search Bar */}
-            <Box sx={{ mb: 2, mt: 2, width: "100%", maxWidth: 1040 }}>
-                <TextField
-                    fullWidth
-                    variant="outlined"
-                    label="Search your favorite movies..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton onClick={handleSearch}>
-                                    <SearchIcon />
-                                </IconButton>
-                                {query && (
-                                    <IconButton onClick={clearSearchQuery}>
-                                        <span style={{ fontSize: "18px" }}>X</span>
-                                    </IconButton>
-                                )}
-                            </InputAdornment>
-                        ),
-                    }}
-                    sx={{ "& label.Mui-focused": { color: orange[600] }, "& .MuiOutlinedInput-root": { "&.Mui-focused fieldset": { borderColor: orange[600] } } }}
-                />
-            </Box>
+            <MovieSearchBar 
+                query={query}
+                setQuery={setQuery}
+                handleSearch={handleSearch}
+                clearSearchQuery={clearSearchQuery}
+                label="Search your favorite movies..."
+            />
 
             {/* Filters */}
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 5, width: "100%", maxWidth: 1040, "& label.Mui-focused": { color: orange[600] }, "& .MuiOutlinedInput-root": { "&.Mui-focused fieldset": { borderColor: orange[600] } } }} >
-                {/* Filter by Genre */}
-                <FormControl fullWidth sx={{ minWidth: 150 }}>
-                    <InputLabel>Filter By Genre of the movie</InputLabel>
-                    <Select
-                        value={selectedGenre}
-                        onChange={(e) => setSelectedGenre(e.target.value)}
-                        label="Filter By Genre of the movie"
-                    >
-                        <MenuItem value="">All</MenuItem>
-                        {genres.map((genre) => (
-                            <MenuItem key={genre.id} value={genre.id}>
-                                {genre.name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-
-                {/* Filter by released year */}
-                <FormControl fullWidth sx={{ minWidth: 150 }}>
-                    <TextField
-                        label="Filter by Released Year of the movie"
-                        type="number"
-                        value={selectedYear}
-                        onChange={(e) => setSelectedYear(e.target.value)}
-                    />
-                </FormControl>
-
-                {/* Filter by Rating */}
-                <FormControl fullWidth sx={{ minWidth: 150 }}>
-                    <TextField
-                        label="Filter by Min Rating"
-                        type="number"
-                        value={selectedRating}
-                        onChange={(e) => setSelectedRating(e.target.value)}
-                    />
-                </FormControl>
-            </Box>
+            <MovieFilterBars 
+                genres={genres}
+                selectedGenre={selectedGenre}
+                setSelectedGenre={setSelectedGenre}
+                selectedYear={selectedYear}
+                setSelectedYear={setSelectedYear}
+                selectedRating={selectedRating}
+                setSelectedRating={setSelectedRating}
+            />
 
             {/* Set the loading of the movies */}
             {loading ? (
