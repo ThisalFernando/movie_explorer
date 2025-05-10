@@ -137,7 +137,6 @@ const Navbar = () => {
                                         to={item.path}
                                         variant={currentPath === item.path ? "contained" : "text"}
                                         sx={{
-                                            fontWeight: "bold",
                                             color: currentPath === item.path ? "black" : "#fff",
                                             bgcolor: currentPath === item.path ? orange[600] : "transparent",
                                             "&:hover": { bgcolor: currentPath === item.path ? orange[700] : grey[800], }
