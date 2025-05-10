@@ -194,7 +194,6 @@ const MovieGrid = () => {
                             variant="h3"
                             sx={{
                                 fontWeight: "bold",
-                                fontFamily: "Roboto",
                                 fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem", lg: "3rem" },
                                 display: "flex",
                                 alignItems: "center",
