@@ -37,6 +37,7 @@ const MovieGrid = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(false);
     const [favorites, setFavorites] = useState([]);
+    const [loading, setLoading] = useState(true);
     const token = localStorage.getItem("token");
 
     const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
@@ -50,6 +51,8 @@ const MovieGrid = () => {
             setGenres(res.data.genres);
         } catch (err) {
             console.error("Error fetching genres:", err);
+        }finally{
+            setLoading(false);
         }
     }, [API_KEY]);
 
@@ -289,57 +292,64 @@ const MovieGrid = () => {
                 </FormControl>
             </Box>
 
-            {/* Movie Grid */}
-            <Grid container spacing={5} sx={{ ml: { sm: 6 } }}>
-                {movies.map((movie) => (
-                    <Grid item key={movie.id} xs={12} sm={6} md={4} lg={3} position="relative">
-                        <Link to={`/movie/${movie.id}`} style={{ textDecoration: "none" }}>
-                            <Card sx={{ bgcolor: "background.paper", height: "100%" }}>
-                                {/* Movie Poster */}
-                                <CardMedia
-                                    component="img"
-                                    image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                    alt={movie.title}
-                                />
-                                <CardContent>
-                                    {/* Movie Poster */}
-                                    <Typography variant="h6" component="div" sx={{ color: orange[600], fontWeight: "bold" }}>
-                                        {movie.title}
-                                    </Typography>
+            {/* Set the loading of the movies */}
+            {loading ? (
+                <Typography sx={{fontSize: {xs: '12px', sm: '14px', md: '16px' }, mb: { xs: 7, sm: 7, md: 12 }, color: grey[500]}}>Loading movies...</Typography>
+            ) : movies.length === 0 ? (
+                <Typography sx={{fontSize: {xs: '12px', sm: '14px', md: '16px' }, mb: { xs: 7, sm: 7, md: 12 }, color: grey[500]}}>No movies found!</Typography>
+            ) : (
+                <>
+                    {/* Movie Grid */}
+                    <Grid container spacing={5} sx={{ ml: { sm: 6 } }}>
+                        {movies.map((movie) => (
+                            <Grid item key={movie.id} xs={12} sm={6} md={4} lg={3} position="relative">
+                                <Link to={`/movie/${movie.id}`} style={{ textDecoration: "none" }}>
+                                    <Card sx={{ bgcolor: "background.paper", height: "100%" }}>
+                                        {/* Movie Poster */}
+                                        <CardMedia
+                                            component="img"
+                                            image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                            alt={movie.title}
+                                        />
+                                        <CardContent>
+                                            {/* Movie Poster */}
+                                            <Typography variant="h6" component="div" sx={{ color: orange[600], fontWeight: "bold" }}>
+                                                {movie.title}
+                                            </Typography>
 
-                                    {/* Movie release year */}
-                                    <Typography variant="body2" color="text.secondary">
-                                        Year: {movie.release_date?.split("-")[0]}
-                                    </Typography>
+                                            {/* Movie release year */}
+                                            <Typography variant="body2" color="text.secondary">
+                                                Year: {movie.release_date?.split("-")[0]}
+                                            </Typography>
 
-                                    {/* Movie Rating */}
-                                    <Typography variant="body2" color="text.secondary">
-                                        Rating: {movie.vote_average}
-                                    </Typography><br />
+                                            {/* Movie Rating */}
+                                            <Typography variant="body2" color="text.secondary">
+                                                Rating: {movie.vote_average}
+                                            </Typography><br />
 
-                                    {/* Movie Rating in stars */}
-                                    <Rating
-                                        value={movie.vote_average / 2}
-                                        precision={0.5}
-                                        readOnly
-                                        size="medium"
-                                    />
-                                </CardContent>
-                            </Card>
-                        </Link>
-                        <IconButton
-                            onClick={(e) => {
-                                e.preventDefault();
-                                toggleFavorite(movie);
-                            }}
-                            sx={{position: "absolute", top: 8, right: 8, color: "red"}}
-                        >
-                            {favorites.includes(movie.id) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                        </IconButton>
+                                            {/* Movie Rating in stars */}
+                                            <Rating
+                                                value={movie.vote_average / 2}
+                                                precision={0.5}
+                                                readOnly
+                                                size="medium"
+                                            />
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                                <IconButton
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        toggleFavorite(movie);
+                                    }}
+                                    sx={{position: "absolute", top: 8, right: 8, color: "red"}}
+                                >
+                                    {favorites.includes(movie.id) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                                </IconButton>
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
-            </Grid>
-
+                </>)}
             {/* Load More Button */}
             {hasMore && (
                 <Box sx={{ mt: 4, mb: 6, display: "flex", justifyContent: "center", boxShadow: 5 }}>
