@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import MELogo from "../asserts/MELogo.png";
 
 const FavoriteMovies = () => {
+    document.title = "MOVIE EXPLORER | Favorite Movies";
     const [favorites, setFavorites] = useState([]);
     const token = localStorage.getItem("token");
     const [loading, setLoading] = useState(true);
