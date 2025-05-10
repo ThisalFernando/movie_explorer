@@ -23,6 +23,8 @@ import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { orange } from "@mui/material/colors"
 import MELogo from "../asserts/MELogo.png";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const TrendingMovies = ({ timeWindow = "week" }) => {
     document.title = "MOVIE EXPLORER | Trending Movies";
@@ -35,6 +37,7 @@ const TrendingMovies = ({ timeWindow = "week" }) => {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(false);
+    const [favorites, setFavorites] = useState([]);
 
     const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
@@ -122,6 +125,51 @@ const TrendingMovies = ({ timeWindow = "week" }) => {
         const nextPage = page + 1;
         fetchTrending(nextPage, true);
     }
+
+    // Fetch favorite movies
+    const fetchFavorites = useCallback(async () => {
+        if(!token) return;
+        try{
+            const res = await axios.get("https://movieexplorerbackend-production.up.railway.app/api/favorite-movies", {
+                headers: {Authorization: `Bearer ${token}`}
+            });
+            setFavorites(res.data.map(f => f.movieId));
+        }catch(err){
+            console.error("Failed to load favorites", err);
+        }
+    }, [token]);
+
+    useEffect(() => {
+        fetchFavorites();
+    }, [fetchFavorites]);
+
+    //Handling toggle button
+    const toggleFavorite = async (movie) => {
+        if(!token) return alert("Please login to add favorites!");
+
+        const isFav = favorites.includes(movie.id);
+        try{
+            if(isFav){
+                await axios.delete(`https://movieexplorerbackend-production.up.railway.app/api/favorite-movies/${movie.id}`, {
+                    headers: {Authorization: `Bearer ${token}`}
+                });
+                setFavorites(favorites.filter(id => id !== movie.id));
+            }else{
+                await axios.post("https://movieexplorerbackend-production.up.railway.app/api/favorite-movies", {
+                    movieId: movie.id,
+                    title: movie.title,
+                    poster_path: movie.poster_path,
+                    release_date: movie.release_date,
+                    vote_average: movie.vote_average,
+                }, {
+                    headers: {Authorization: `Bearer ${token}`}
+                });
+                setFavorites([...favorites.movie.id]);
+            }
+        }catch(err){
+            console.error("Favorite toggle failed: ", err);
+        }
+    };
 
     return (
         <Container sx={{ mt: 10, px: { xs: 2, sm: 3, md: 4 }, display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -280,6 +328,15 @@ const TrendingMovies = ({ timeWindow = "week" }) => {
                                         </CardContent>
                                     </Card>
                                 </Link>
+                                <IconButton
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        toggleFavorite(movie);
+                                    }}
+                                    sx={{position: "absolute", top: 8, right: 8, color: "red"}}
+                                >
+                                    {favorites.includes(movie.id) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                                </IconButton>
                             </Grid>
                         ))}
                     </Grid>
